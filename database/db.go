@@ -48,18 +48,19 @@ VALUES ($1, $2, $3, $4, $5) RETURNING id`
 	}
 	fmt.Print(id)
 }
-func SearchUSER() {
-	sqlStatement := `SELECT id, email FROM app.info WHERE id=$1;`
+func SearchUSER(A string) int {
+	sqlStatement := `SELECT id, email FROM app.info WHERE $1;`
 	var email string
 	var id int
 	// Replace 3 with an ID from your database or another random
 	// value to test the no rows use case.
-	row := star.QueryRow(sqlStatement, 3)
+	row := star.QueryRow(sqlStatement, A)
 	switch err := row.Scan(&id, &email); err {
 	case sql.ErrNoRows:
 		fmt.Println("No rows were returned!")
+		return -1
 	case nil:
-		fmt.Println(id, email)
+		return id
 	default:
 		panic(err)
 	}
