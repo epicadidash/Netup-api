@@ -51,10 +51,40 @@ VALUES ($1, $2, $3, $4, $5) RETURNING id`
 
 	}()
 }
+func TestUser(A string, B string, C string) bool {
+	switch B {
+	case `email`:
+		sqlStatement := `SELECT password FROM app.info WHERE email = $1;`
+		var password string
+		// Replace 3 with an ID from your database or another random
+		// value to test the no rows use case.
+		row := star.QueryRow(sqlStatement, A)
+		row.Scan(&password)
+		if password == C {
+			return true
+		} else {
+			return false
+		}
+	case `username`:
+		sqlStatement := `SELECT  password FROM app.info WHERE username = $1;`
+		var password string
+		// Replace 3 with an ID from your database or another random
+		// value to test the no rows use case.
+		row := star.QueryRow(sqlStatement, A)
+		row.Scan(&password)
+		if password == C {
+			return true
+		} else {
+			return false
+		}
+	default:
+		return false
+	}
+}
 func SearchUSER(A string, B string) int {
 	switch B {
 	case `email`:
-		sqlStatement := `SELECT id, email FROM app.info WHERE email = $1;`
+		sqlStatement := `SELECT id, email, password FROM app.info WHERE email = $1;`
 		var email string
 		var id int
 		// Replace 3 with an ID from your database or another random
@@ -69,7 +99,7 @@ func SearchUSER(A string, B string) int {
 			return -1
 		}
 	case `username`:
-		sqlStatement := `SELECT id, email FROM app.info WHERE username = $1;`
+		sqlStatement := `SELECT id, email, password FROM app.info WHERE username = $1;`
 		var email string
 		var id int
 		// Replace 3 with an ID from your database or another random
