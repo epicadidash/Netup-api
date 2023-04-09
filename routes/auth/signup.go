@@ -21,7 +21,7 @@ type response struct {
 	Res string `json:"result`
 }
 
-func ArticleHandler(w http.ResponseWriter, r *http.Request) {
+func Signup(w http.ResponseWriter, r *http.Request) {
 	var p person
 	w.Header().Set("Content-Type", "application/json")
 	err := json.NewDecoder(r.Body).Decode(&p)
@@ -31,7 +31,7 @@ func ArticleHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	db.Connect()
 
-	if db.SearchUSER(p.Username, `username`) != -1 {
+	if db.SearchUSER(p.Username, `username`) == -1 {
 		star := db.SearchUSER(p.Username, `username`)
 		hei := fmt.Sprintf("Bad = %d", star)
 		var s response = response{Res: hei}
@@ -41,7 +41,7 @@ func ArticleHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write(jsonResponse)
-	} else if db.SearchUSER(p.Email, `email`) != -1 {
+	} else if db.SearchUSER(p.Email, `email`) == -1 {
 		star := db.SearchUSER(`jr@calhlou.io`, `email`)
 		hei := fmt.Sprintf("Bad = %d", star)
 		var s response = response{Res: hei}
@@ -52,7 +52,7 @@ func ArticleHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write(jsonResponse)
 	} else {
-		db.InsertUSER(p.Email, p.First_name, p.Last_name, p.Username, p.Password)
+		db.InsertUSER(p.Email, p.First_name, p.Last_name, p.Username, Hash(p.Password))
 		var s response = response{Res: "Succesful"}
 		jsonResponse, jsonError := json.Marshal(s)
 		if jsonError != nil {

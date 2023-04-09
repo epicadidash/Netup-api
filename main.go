@@ -14,6 +14,17 @@ package main
 // 	fmt.Println(hei)
 // }
 
+// import (
+// 	"fmt"
+
+// 	parent "dotoday.com/core/routes/auth"
+// )
+
+// func main() {
+// 	hei := parent.Hash(`starkiller@hei.io`)
+// 	fmt.Println(hei)
+// }
+
 import (
 	"log"
 	"net/http"
@@ -25,7 +36,8 @@ import (
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/auth/signup", star.ArticleHandler)
+	r.HandleFunc("/auth/signup", star.Signup).Methods("POST")
+	r.HandleFunc("/auth/login", star.Login).Methods("POST")
 	srv := &http.Server{
 		Handler:      r,
 		Addr:         "127.0.0.1:8000",
