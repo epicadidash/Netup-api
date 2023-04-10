@@ -84,28 +84,26 @@ func TestUser(A string, B string, C string) bool {
 func SearchUSER(A string, B string) int {
 	switch B {
 	case `email`:
-		sqlStatement := `SELECT id, email, password FROM app.info WHERE email = $1;`
-		var email string
+		sqlStatement := `SELECT id FROM app.info WHERE email = $1;`
 		var id int
 		// Replace 3 with an ID from your database or another random
 		// value to test the no rows use case.
 		row := star.QueryRow(sqlStatement, A)
-		switch err := row.Scan(&id, &email); err {
+		switch err := row.Scan(&id); err {
 		case sql.ErrNoRows:
-			return -1
+			return -2
 		case nil:
 			return id
 		default:
 			return -1
 		}
 	case `username`:
-		sqlStatement := `SELECT id, email, password FROM app.info WHERE username = $1;`
-		var email string
+		sqlStatement := `SELECT id FROM app.info WHERE username = $1;`
 		var id int
 		// Replace 3 with an ID from your database or another random
 		// value to test the no rows use case.
 		row := star.QueryRow(sqlStatement, A)
-		switch err := row.Scan(&id, &email); err {
+		switch err := row.Scan(&id); err {
 		case sql.ErrNoRows:
 			return -1
 		case nil:

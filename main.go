@@ -1,13 +1,16 @@
 package main
 
 // import (
+// 	"fmt"
+
 // 	parent "dotoday.com/core/database"
 // )
 
 // func main() {
 // 	parent.Connect()
 // 	parent.Ping()
-// 	parent.RemoveUSER("1")
+// 	star := parent.SearchUSER(`swati@pani`, `email`)
+// 	fmt.Println(star)
 // }
 
 // import (
@@ -32,9 +35,10 @@ import (
 
 func main() {
 	r := mux.NewRouter()
+
+	r.HandleFunc("/auth/delete", star.Delete).Methods("DELETE")
 	r.HandleFunc("/auth/signup", star.Signup).Methods("POST")
 	r.HandleFunc("/auth/login", star.Login).Methods("POST")
-	r.HandleFunc("/auth/delete", star.Delete).Methods("DELETE")
 	srv := &http.Server{
 		Handler:      r,
 		Addr:         "127.0.0.1:8000",
