@@ -1,17 +1,13 @@
 package main
 
 // import (
-// 	"fmt"
-
 // 	parent "dotoday.com/core/database"
 // )
 
 // func main() {
 // 	parent.Connect()
 // 	parent.Ping()
-// 	star := parent.SearchUSER(`jr@calhlou.io`, `email`)
-// 	hei := parent.UpdateUSER(`starkiller@hei.io`, `email`, star)
-// 	fmt.Println(hei)
+// 	parent.RemoveUSER("1")
 // }
 
 // import (

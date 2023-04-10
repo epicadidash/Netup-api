@@ -117,12 +117,18 @@ func SearchUSER(A string, B string) int {
 		return -1
 	}
 }
-func RemoveUSER(A string) {
-	sqlStatement := `DELETE FROM app.info WHERE id = $1 ;`
-	_, err := star.Exec(sqlStatement, A)
+func RemoveUSER(A string) int {
+	var id int = 0
+	sqlStatement := ` DELETE FROM app.info WHERE id = $1 RETURNING id; `
+	err := star.QueryRow(sqlStatement, A).Scan(&id)
 	if err != nil {
-		panic(err)
+		id = -1
+		return id
+
+	} else {
+		return id
 	}
+
 }
 
 func UpdateUSER(A string, B string, C int) int {

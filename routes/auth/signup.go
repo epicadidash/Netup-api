@@ -31,7 +31,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	}
 	db.Connect()
 
-	if db.SearchUSER(p.Username, `username`) == -1 {
+	if db.SearchUSER(p.Username, `username`) != -1 {
 		star := db.SearchUSER(p.Username, `username`)
 		hei := fmt.Sprintf("Bad = %d", star)
 		var s response = response{Res: hei}
@@ -41,7 +41,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		}
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write(jsonResponse)
-	} else if db.SearchUSER(p.Email, `email`) == -1 {
+	} else if db.SearchUSER(p.Email, `email`) != -1 {
 		star := db.SearchUSER(`jr@calhlou.io`, `email`)
 		hei := fmt.Sprintf("Bad = %d", star)
 		var s response = response{Res: hei}
