@@ -129,11 +129,11 @@ func RemoveUSER(A string) int {
 
 }
 
-func UpdateUSER(A string, B string, C int) int {
+func UpdateUSER(A string, B string, C string) int {
 	switch B {
 	case `email`:
 		var id int = 0
-		sqlStatement := `UPDATE app.info SET email = $1 WHERE id =$2 RETURNING id;`
+		sqlStatement := `UPDATE app.info SET email = $1 WHERE id = $2 RETURNING id;`
 		err := star.QueryRow(sqlStatement, A, C).Scan(&id)
 		if err != nil {
 			panic(err)
@@ -141,7 +141,7 @@ func UpdateUSER(A string, B string, C int) int {
 		return id
 	case `username`:
 		var id int = 0
-		sqlStatement := `UPDATE app.info SET username = $1 WHERE id =$2 RETURNING id;`
+		sqlStatement := `UPDATE app.info SET username = $1 WHERE id = $2 RETURNING id;`
 		err := star.QueryRow(sqlStatement, A, C).Scan(&id)
 		if err != nil {
 			panic(err)
@@ -149,7 +149,7 @@ func UpdateUSER(A string, B string, C int) int {
 		return id
 	case `password`:
 		var id int = 0
-		sqlStatement := `UPDATE app.info SET password = $1 WHERE id =$2 RETURNING id;`
+		sqlStatement := `UPDATE app.info SET password = $1 WHERE id = $2 RETURNING id;`
 		err := star.QueryRow(sqlStatement, A, C).Scan(&id)
 		if err != nil {
 			panic(err)
@@ -157,7 +157,7 @@ func UpdateUSER(A string, B string, C int) int {
 		return id
 	case `first_name`:
 		var id int = 0
-		sqlStatement := `UPDATE app.info SET first_name = $1 WHERE id =$2 RETURNING id;`
+		sqlStatement := `UPDATE app.info SET first_name = $1 WHERE id = $2 RETURNING id;`
 		err := star.QueryRow(sqlStatement, A, C).Scan(&id)
 		if err != nil {
 			panic(err)
@@ -165,7 +165,7 @@ func UpdateUSER(A string, B string, C int) int {
 		return id
 	case `last_name`:
 		var id int = 0
-		sqlStatement := `UPDATE app.info SET last_name = $1 WHERE id =$2 RETURNING id;`
+		sqlStatement := `UPDATE app.info SET last_name = $1 WHERE id = $2 RETURNING id;`
 		err := star.QueryRow(sqlStatement, A, C).Scan(&id)
 		if err != nil {
 			panic(err)

@@ -39,6 +39,7 @@ func main() {
 	r.HandleFunc("/auth/delete", star.Delete).Methods("DELETE")
 	r.HandleFunc("/auth/signup", star.Signup).Methods("POST")
 	r.HandleFunc("/auth/login", star.Login).Methods("POST")
+	r.HandleFunc("/auth/update/{type}", star.Update).Methods("PUT")
 	srv := &http.Server{
 		Handler:      r,
 		Addr:         "127.0.0.1:8000",
