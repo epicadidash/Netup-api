@@ -1,9 +1,8 @@
 package auth
 
 import (
-	// "encoding/json"
+	"encoding/json"
 	"fmt"
-
 	"net/http"
 
 	db "dotoday.com/core/database"
@@ -18,5 +17,13 @@ func Update(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	hei := vars["type"]
 	grep := db.UpdateUSER(value, hei, id)
-	fmt.Println(grep)
+	// fmt.Println(grep)
+	hei = fmt.Sprintf(`Succesful = %d`, grep)
+	var s response = response{Res: hei}
+	jsonResponse, jsonError := json.Marshal(s)
+	if jsonError != nil {
+		fmt.Println("Unable to encode JSON")
+	}
+	w.WriteHeader(http.StatusAccepted)
+	w.Write(jsonResponse)
 }
