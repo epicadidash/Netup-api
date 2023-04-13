@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	_ "github.com/lib/pq"
 )
@@ -167,6 +168,54 @@ func UpdateUSER(A string, B string, C string) int {
 		var id int = 0
 		sqlStatement := `UPDATE app.info SET last_name = $1 WHERE id = $2 RETURNING id;`
 		err := star.QueryRow(sqlStatement, A, C).Scan(&id)
+		if err != nil {
+			panic(err)
+		}
+		return id
+	default:
+		return -1
+	}
+}
+func InsertNote(A string, B string, C string) {
+	tme := time.Now().Format("01-02-2006 15:04:05")
+	sqlStatement := `
+INSERT INTO app.notes (title,description,userid,last_edited)
+VALUES ($1, $2, $3, $4) `
+	_, err := star.Exec(sqlStatement, A, B, C, tme)
+	if err != nil {
+		panic(err)
+	}
+
+}
+func DeleteNote(A string) int {
+	var id int = 0
+
+	sqlStatement := ` DELETE FROM app.notes WHERE id = $1 RETURNING id; `
+	err := star.QueryRow(sqlStatement, A).Scan(&id)
+	if err != nil {
+		id = -1
+		return id
+
+	} else {
+		return id
+	}
+}
+func UpdateNotes(A string, B string, C string) int {
+	switch B {
+	case `title`:
+		var id int = 0
+		tme := time.Now().Format("01-02-2006 15:04:05")
+		sqlStatement := `UPDATE app.notes SET title = $1, last_edited = $3  WHERE id = $2 RETURNING id;`
+		err := star.QueryRow(sqlStatement, A, C, tme).Scan(&id)
+		if err != nil {
+			panic(err)
+		}
+		return id
+	case `description`:
+		var id int = 0
+		tme := time.Now().Format("01-02-2006 15:04:05")
+		sqlStatement := `UPDATE app.notes SET description = $1, last_edited = $3 WHERE id = $2 RETURNING id;`
+		err := star.QueryRow(sqlStatement, A, C, tme).Scan(&id)
 		if err != nil {
 			panic(err)
 		}
