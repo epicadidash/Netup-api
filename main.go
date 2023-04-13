@@ -5,12 +5,16 @@ import (
 
 	// "fmt"
 
+	"fmt"
+
 	parent "dotoday.com/core/database"
 )
 
 func main() {
 	parent.Connect()
-	parent.InsertNote(`IRon Man`, `title sponsor for this match`, `17`)
+
+	star := parent.GetUser(`17`)
+	fmt.Println(star)
 
 }
 

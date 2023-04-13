@@ -224,3 +224,37 @@ func UpdateNotes(A string, B string, C string) int {
 		return -1
 	}
 }
+
+type Note struct {
+	Title       string
+	Description string
+	Last_edited string
+}
+
+func GetUser(A string) []Note {
+	shay := []Note{}
+	sqlStatement := `SELECT id, title, description, last_edited FROM app.notes  WHERE userid = $1;`
+	rows, err := star.Query(sqlStatement, A)
+	if err != nil {
+		// handle this error better than this
+		panic(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var id int
+		var title string
+		var description string
+		var last_edited string
+		err = rows.Scan(&id, &title, &description, &last_edited)
+		var strategy Note
+		strategy.Title = title
+		strategy.Description = description
+		strategy.Last_edited = last_edited
+		if err != nil {
+			// handle this error
+			panic(err)
+		}
+		shay = append(shay, strategy)
+	}
+	return shay
+}
