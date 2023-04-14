@@ -176,7 +176,7 @@ func UpdateUSER(A string, B string, C string) int {
 		return -1
 	}
 }
-func InsertNote(A string, B string, C string) {
+func InsertNote(A string, B string, C int) {
 	tme := time.Now().Format("01-02-2006 15:04:05")
 	sqlStatement := `
 INSERT INTO app.notes (title,description,userid,last_edited)
@@ -231,7 +231,7 @@ type Note struct {
 	Last_edited string
 }
 
-func GetUser(A string) []Note {
+func GetNote(A string) []Note {
 	shay := []Note{}
 	sqlStatement := `SELECT id, title, description, last_edited FROM app.notes  WHERE userid = $1;`
 	rows, err := star.Query(sqlStatement, A)
