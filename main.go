@@ -30,6 +30,7 @@ package main
 // }
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -55,5 +56,6 @@ func main() {
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
+	fmt.Println("Started")
 	log.Fatal(srv.ListenAndServe())
 }

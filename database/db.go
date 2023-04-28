@@ -49,7 +49,6 @@ VALUES ($1, $2, $3, $4, $5) RETURNING id`
 		if err != nil {
 			panic(err)
 		}
-
 	}()
 }
 func TestUser(A string, B string, C string) bool {
